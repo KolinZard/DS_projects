@@ -1,8 +1,8 @@
 import numpy as np
 
 def num_rand_game(number: int = 1) -> int:
-    """Сначала устанавливаем любое random число, а потом уменьшаем
-    или увеличиваем его в зависимости от того, больше оно или меньше нужного.
+    """Сначала устанавливаем число равно границам рандом числа // 2, а потом уменьшаем
+    границы диапозона поиска в зависимости от того, больше оно или меньше нужного.
        Функция принимает загаданное число и возвращает число попыток
        
     Args:
@@ -12,31 +12,26 @@ def num_rand_game(number: int = 1) -> int:
         int: Число попыток
     """
     
+    low, high = 1, 101 # вынесем границы диапозона рандома числа для удобста f-строк и цикла while
+    number = np.random.randint(low, high)
     count = 0
-    predict = np.random.randint(1, 101)
-    if predict == number:
+
+    while True:
+        predict = (low + high) // 2 # Делим диапозон числа пополам и делаем вывод: больше или меньше искомого
         count += 1
-        return count
-    while predict > number:
-        count += 1
-        predict -= 10
+
         if predict == number:
-            return count
-        while predict < number:
-            count += 1
-            predict += 1
-            if predict == number:
-                return count
-    while predict < number:
-        count += 1
-        predict += 10
-        if predict == number:
-            return count
-        while predict > number:
-            count += 1
-            predict -= 1
-            if predict == number:
-                return count
+            print(f"Число {number} угадано за {count} попыток.")
+            break
+        elif predict < number:
+            # Если наше число меньше искомого, меняем  нижний диапозон на наше число +1
+            print(f"Попытка {count}: {predict} - Слишком маленькое число, угадываем в диапазоне [{predict + 1}, {high}].")
+            low = predict + 1
+        else:
+            # Если наше число больше искомого, меняем  верхний диапозон на наше число -1
+            print(f"Попытка {count}: {predict} - Слишком большое число, угадываем в диапазоне [{low}, {predict - 1}].")
+            high = predict - 1
+    return count
             
 
 # print(num_rand_game())
