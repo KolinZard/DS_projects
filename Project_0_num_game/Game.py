@@ -21,15 +21,12 @@ def num_rand_game(number: int = 1) -> int:
         count += 1
 
         if predict == number:
-            print(f"Число {number} угадано за {count} попыток.")
             break
         elif predict < number:
             # Если наше число меньше искомого, меняем  нижний диапозон на наше число +1
-            print(f"Попытка {count}: {predict} - Слишком маленькое число, угадываем в диапазоне [{predict + 1}, {high}].")
             low = predict + 1
         else:
             # Если наше число больше искомого, меняем  верхний диапозон на наше число -1
-            print(f"Попытка {count}: {predict} - Слишком большое число, угадываем в диапазоне [{low}, {predict - 1}].")
             high = predict - 1
     return count
             
